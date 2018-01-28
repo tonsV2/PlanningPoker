@@ -24,6 +24,7 @@ class GameController(val gameService: GameService,
         return gameService.createGame(player, cardGroup)
     }
 
+    // TODO: Should return Game not Story
     @PostMapping("/games/{key}/stories/{title}")
     fun addStory(@PathVariable key: String, @PathVariable title: String): Story {
         val game = gameService.findGameByKey(key)
