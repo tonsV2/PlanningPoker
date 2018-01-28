@@ -6,9 +6,9 @@ import javax.persistence.*
 import kotlin.collections.HashSet
 
 @Entity
+@Table(indexes = [Index(columnList = "key")])
 class Game(
         val title: String? = null,
-        // TODO: Should be indexed
         val key: String = UUID.randomUUID().toString(),
         val created: LocalDateTime = LocalDateTime.now(),
         @OneToOne

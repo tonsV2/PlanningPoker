@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
+@Table(indexes = [Index(columnList = "name")])
 class Player(
-        // TODO: Should be indexed
         val name: String,
         @ManyToOne
         @JsonIgnore

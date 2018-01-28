@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
+@Table(indexes = [Index(columnList = "title")])
 class Story(
-        // TODO: Should be indexed
         val title: String,
         @JsonIgnore
         @ManyToOne
