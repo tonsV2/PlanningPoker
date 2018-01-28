@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
-class Card(
-        var title: String,
-        var value: Int,
-        @JsonIgnore
+class Player(
+        var name: String,
         @ManyToOne
-        var group: CardGroup,
+        @JsonIgnore
+        var game: Game? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0
-) {
-    constructor() : this("", 0, CardGroup("", null), 0)
-}
+)
