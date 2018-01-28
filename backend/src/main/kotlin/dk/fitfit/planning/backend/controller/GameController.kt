@@ -29,4 +29,9 @@ class GameController(val gameService: GameService,
         val game = gameService.findGameByKey(key)
         return storyService.save(title, game)
     }
+
+    @GetMapping("/games/{key}")
+    fun findGameByKey(@PathVariable key: String): Game {
+        return gameService.findGameByKey(key)
+    }
 }
