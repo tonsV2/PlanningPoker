@@ -11,4 +11,6 @@ class Player(
         var game: Game? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0
-)
+) {
+    constructor() : this(name = "")
+}
