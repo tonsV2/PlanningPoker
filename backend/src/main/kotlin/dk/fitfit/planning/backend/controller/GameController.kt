@@ -1,7 +1,7 @@
 package dk.fitfit.planning.backend.controller
 
 import dk.fitfit.planning.backend.domain.Game
-import dk.fitfit.planning.backend.repository.CardGroupRepository
+import dk.fitfit.planning.backend.repository.DeckRepository
 import dk.fitfit.planning.backend.service.GameService
 import dk.fitfit.planning.backend.service.PlayerService
 import dk.fitfit.planning.backend.service.StoryService
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class GameController(val gameService: GameService,
                      val playerService: PlayerService,
-                     val cardGroupRepository: CardGroupRepository,
+                     val deckRepository: DeckRepository,
                      val storyService: StoryService) {
 
     @PostMapping("/games/{ownerName}")
     fun createGame(@PathVariable ownerName: String): Game {
         val player = playerService.findOrCreate(ownerName)
-        val cardGroup = cardGroupRepository.findAll().first() // TODO: Should be a service
-        return gameService.createGame(player, cardGroup)
+        val deck = deckRepository.findAll().first() // TODO: Should be a service
+        return gameService.createGame(player, deck)
     }
 
     @PostMapping("/games/{key}/stories/{title}")

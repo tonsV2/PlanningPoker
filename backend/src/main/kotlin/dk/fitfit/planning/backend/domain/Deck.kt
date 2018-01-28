@@ -4,9 +4,9 @@ import javax.persistence.*
 import javax.persistence.FetchType.EAGER
 
 @Entity
-class CardGroup(
+class Deck(
         val title: String = "",
-        @OneToMany(mappedBy = "group", fetch = EAGER, cascade = [CascadeType.ALL])
+        @OneToMany(mappedBy = "deck", fetch = EAGER, cascade = [CascadeType.ALL])
         val cards: List<Card>? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0

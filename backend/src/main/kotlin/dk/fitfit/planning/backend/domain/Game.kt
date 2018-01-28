@@ -12,7 +12,7 @@ class Game(
         val key: String = UUID.randomUUID().toString(),
         val created: LocalDateTime = LocalDateTime.now(),
         @OneToOne
-        var cardGroup: CardGroup? = null, // TODO: Should be val?
+        var deck: Deck? = null, // TODO: Should be val?
         @OneToOne
         val owner: Player,
         @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])

@@ -1,6 +1,6 @@
 package dk.fitfit.planning.backend.service
 
-import dk.fitfit.planning.backend.domain.CardGroup
+import dk.fitfit.planning.backend.domain.Deck
 import dk.fitfit.planning.backend.domain.Game
 import dk.fitfit.planning.backend.domain.Player
 import dk.fitfit.planning.backend.repository.GameRepository
@@ -17,9 +17,9 @@ class GameServiceImpl(val gameRepository: GameRepository) : GameService {
         return gameRepository.findByKey(key)
     }
 
-    override fun createGame(owner: Player, cardGroup: CardGroup): Game {
+    override fun createGame(owner: Player, deck: Deck): Game {
         val game = Game(owner = owner)
-        game.cardGroup = cardGroup
+        game.deck = deck
         return gameRepository.save(game)
     }
 }

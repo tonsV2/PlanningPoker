@@ -9,9 +9,9 @@ class Card(
         val value: Int,
         @JsonIgnore
         @ManyToOne
-        val group: CardGroup,
+        val deck: Deck,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0
 ) {
-    constructor() : this("", 0, CardGroup("", null), 0)
+    constructor() : this("", 0, Deck("", null), 0)
 }
