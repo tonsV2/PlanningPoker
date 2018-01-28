@@ -1,6 +1,7 @@
 package dk.fitfit.planning.backend.controller
 
 import dk.fitfit.planning.backend.domain.Game
+import dk.fitfit.planning.backend.domain.Player
 import dk.fitfit.planning.backend.domain.Story
 import dk.fitfit.planning.backend.repository.CardGroupRepository
 import dk.fitfit.planning.backend.service.GameService
@@ -18,17 +19,26 @@ class GameController(val gameService: GameService,
                      val storyService: StoryService) {
 
     @PostMapping("/games/{ownerName}")
-    fun getCards(@PathVariable ownerName: String): Game {
+    fun createGame(@PathVariable ownerName: String): Game {
         val player = playerService.findOrCreatePlayer(ownerName)
         val cardGroup = cardGroupRepository.findAll().first() // TODO: Should be a service
         return gameService.createGame(player, cardGroup)
     }
 
-    // TODO: Should return Game not Story
+    // TODO: Can I limit the number of queries being executed? Can I avoid reloading game
     @PostMapping("/games/{key}/stories/{title}")
-    fun addStory(@PathVariable key: String, @PathVariable title: String): Story {
+    fun addStory(@PathVariable key: String, @PathVariable title: String): Game {
         val game = gameService.findGameByKey(key)
-        return storyService.save(title, game)
+        storyService.save(title, game)
+        return gameService.findGameByKey(key)
+    }
+
+    @PostMapping("/games/{key}/players/{name}")
+    fun addPlayer(@PathVariable key: String, @PathVariable name: String): Game {
+        val game = gameService.findGameByKey(key)
+        val player = playerService.findOrCreatePlayer(name)
+        game.players.add(player)
+        return gameService.save(game)
     }
 
     @GetMapping("/games/{key}")

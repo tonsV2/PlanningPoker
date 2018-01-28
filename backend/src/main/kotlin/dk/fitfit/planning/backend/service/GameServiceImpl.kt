@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class GameServiceImpl(val gameRepository: GameRepository) : GameService {
+    override fun save(game: Game): Game {
+        return gameRepository.save(game)
+    }
+
     override fun findGameByKey(key: String): Game {
         return gameRepository.findByKey(key)
     }
