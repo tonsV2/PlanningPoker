@@ -6,19 +6,19 @@ import javax.persistence.*
 
 @Entity
 class Game(
-        var title: String? = null,
-        var key: String = UUID.randomUUID().toString(),
-        var created: LocalDateTime = LocalDateTime.now(),
+        val title: String? = null,
+        val key: String = UUID.randomUUID().toString(),
+        val created: LocalDateTime = LocalDateTime.now(),
         @OneToOne
-        var cardGroup: CardGroup? = null,
+        var cardGroup: CardGroup? = null, // TODO: Should be val?
         @OneToOne
-        var owner: Player,
+        val owner: Player,
         @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
         val stories: MutableSet<Story>? = null,
         @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-        var players: Set<Player>? = null,
+        val players: Set<Player>? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = 0
+        val id: Long = 0
 ) {
     constructor() : this(owner = Player(""))
 }

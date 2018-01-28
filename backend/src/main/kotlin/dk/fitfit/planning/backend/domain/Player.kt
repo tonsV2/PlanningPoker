@@ -5,12 +5,12 @@ import javax.persistence.*
 
 @Entity
 class Player(
-        var name: String,
+        val name: String,
         @ManyToOne
         @JsonIgnore
-        var game: Game? = null,
+        val game: Game? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = 0
+        val id: Long = 0
 ) {
     constructor() : this(name = "")
 }
