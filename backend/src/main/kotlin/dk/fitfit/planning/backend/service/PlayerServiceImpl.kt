@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PlayerServiceImpl(val playerRepository: PlayerRepository) : PlayerService {
-    override fun findOrCreatePlayer(playerName: String): Player {
+    override fun findOrCreate(playerName: String): Player {
         val optional = playerRepository.findByName(playerName)
         return if (optional.isPresent) {
             optional.get()

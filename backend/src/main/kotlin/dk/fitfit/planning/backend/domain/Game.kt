@@ -16,7 +16,7 @@ class Game(
         @OneToOne
         val owner: Player,
         @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-        val stories: MutableSet<Story>? = null,
+        val stories: MutableSet<Story> = HashSet(),
         @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
         val players: MutableSet<Player> = HashSet(),
         @Id @GeneratedValue(strategy = GenerationType.AUTO)

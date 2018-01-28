@@ -5,6 +5,7 @@ import dk.fitfit.planning.backend.domain.Game
 import dk.fitfit.planning.backend.domain.Player
 import dk.fitfit.planning.backend.repository.GameRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class GameServiceImpl(val gameRepository: GameRepository) : GameService {
@@ -12,7 +13,7 @@ class GameServiceImpl(val gameRepository: GameRepository) : GameService {
         return gameRepository.save(game)
     }
 
-    override fun findGameByKey(key: String): Game {
+    override fun findByKey(key: String): Optional<Game> {
         return gameRepository.findByKey(key)
     }
 
