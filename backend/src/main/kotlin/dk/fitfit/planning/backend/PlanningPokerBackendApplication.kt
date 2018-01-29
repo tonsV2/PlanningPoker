@@ -28,7 +28,9 @@ fun main(args: Array<String>) {
                         arrayOf(Pair("1", 1),
                                 Pair("2", 2),
                                 Pair("3", 3),
-                                Pair("5", 5))
+                                Pair("5", 5),
+                                Pair("8", 8),
+                                Pair("13", 13))
                                 .map { Card(title = it.first, value = it.second, deck = deck) }
                                 .forEach { cardRepository.save(it) }
 
