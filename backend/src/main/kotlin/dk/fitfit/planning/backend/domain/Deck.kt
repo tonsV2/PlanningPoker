@@ -7,6 +7,7 @@ import javax.persistence.FetchType.EAGER
 class Deck(
         val title: String = "",
         @OneToMany(mappedBy = "deck", fetch = EAGER, cascade = [CascadeType.ALL])
+        // TODO: Should be Set
         val cards: List<Card>? = null,
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0

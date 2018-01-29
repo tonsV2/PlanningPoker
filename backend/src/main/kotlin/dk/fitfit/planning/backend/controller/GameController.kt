@@ -1,21 +1,23 @@
 package dk.fitfit.planning.backend.controller
 
 import dk.fitfit.planning.backend.domain.Game
+import dk.fitfit.planning.backend.domain.Hand
+import dk.fitfit.planning.backend.repository.CardRepository
 import dk.fitfit.planning.backend.repository.DeckRepository
+import dk.fitfit.planning.backend.repository.HandRepository
 import dk.fitfit.planning.backend.service.GameService
 import dk.fitfit.planning.backend.service.PlayerService
 import dk.fitfit.planning.backend.service.StoryService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class GameController(val gameService: GameService,
                      val playerService: PlayerService,
                      val deckRepository: DeckRepository,
-                     val storyService: StoryService) {
+                     val storyService: StoryService,
+                     val handRepository: HandRepository,
+                     val cardRepository: CardRepository) {
 
     @PostMapping("/games/{ownerName}")
     fun createGame(@PathVariable ownerName: String): Game {
@@ -54,5 +56,14 @@ class GameController(val gameService: GameService,
         return gameService.findByKey(key).map {
             ResponseEntity.ok().body(it)
         }.orElse(ResponseEntity.notFound().build())
+    }
+
+    @PostMapping("/hands")
+    fun playHand(@RequestParam cardId: Long, @RequestParam storyId: Long, @RequestParam playerId: Long): Hand {
+        val card = cardRepository.getOne(cardId)
+        val story = storyService.findById(storyId)
+        val player = playerService.findById(playerId)
+        val hand = Hand(card, story, player)
+        return handRepository.save(hand)
     }
 }

@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class StoryServiceImpl(val storyRepository: StoryRepository) : StoryService {
+    // TODO: Should this method return Optional<Story>?
+    override fun findById(storyId: Long): Story {
+        return storyRepository.getOne(storyId)
+    }
+
     override fun findOrCreate(storyTitle: String): Story {
         val optional = storyRepository.findByTitle(storyTitle)
         return if (optional.isPresent) {

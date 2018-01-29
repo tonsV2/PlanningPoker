@@ -7,6 +7,9 @@ import javax.persistence.*
 @Table(indexes = [Index(columnList = "title")])
 class Story(
         val title: String,
+        // TODO: Stories and hands should probably be seperated by rounds... Since we might want to replay x number of times
+        @OneToMany(mappedBy = "story", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+        val hands: MutableSet<Hand> = HashSet(),
         @JsonIgnore
         @ManyToOne
         // TODO: Could this be val?
