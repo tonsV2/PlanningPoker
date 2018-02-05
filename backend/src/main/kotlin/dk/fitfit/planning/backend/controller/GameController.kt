@@ -18,10 +18,17 @@ class GameController(val gameService: GameService,
                      val storyService: StoryService,
                      val handRepository: HandRepository,
                      val cardRepository: CardRepository) {
-
+/*
     @PostMapping("/games/{ownerName}")
     fun createGame(@PathVariable ownerName: String): Game {
         val player = playerService.findOrCreate(ownerName)
+        val deck = deckRepository.findAll().first() // TODO: Should be a service
+        return gameService.createGame(player, deck)
+    }
+*/
+    @PostMapping("/games")
+    fun createGame(@RequestParam fingerprint: String): Game {
+        val player = playerService.findOrCreate(fingerprint)
         val deck = deckRepository.findAll().first() // TODO: Should be a service
         return gameService.createGame(player, deck)
     }

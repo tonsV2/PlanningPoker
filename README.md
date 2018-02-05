@@ -1,11 +1,22 @@
 # Planning poker
 
+## Inspiration
+* https://scrumpoker.online/
+* https://pokerscrum.herokuapp.com/static/login
+
 ## TODO
 * Lots of repositories should return optional... Right?
-
+* https://thekiwee.deviantart.com/art/Poker-icon-94902263
 
 
 # Design stuff
+
+## UI Sections
+* Story
+* Votes (cards played)
+* Cards
+* Players
+* Stories
 
 ## Create game
 * Generate uuid for game
