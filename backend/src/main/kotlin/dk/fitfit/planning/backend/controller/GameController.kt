@@ -5,6 +5,7 @@ import dk.fitfit.planning.backend.domain.Hand
 import dk.fitfit.planning.backend.repository.CardRepository
 import dk.fitfit.planning.backend.repository.DeckRepository
 import dk.fitfit.planning.backend.repository.HandRepository
+import dk.fitfit.planning.backend.security.CurrentUserHolder
 import dk.fitfit.planning.backend.service.GameService
 import dk.fitfit.planning.backend.service.PlayerService
 import dk.fitfit.planning.backend.service.StoryService
@@ -17,18 +18,12 @@ class GameController(val gameService: GameService,
                      val deckRepository: DeckRepository,
                      val storyService: StoryService,
                      val handRepository: HandRepository,
-                     val cardRepository: CardRepository) {
-/*
-    @PostMapping("/games/{ownerName}")
-    fun createGame(@PathVariable ownerName: String): Game {
-        val player = playerService.findOrCreate(ownerName)
-        val deck = deckRepository.findAll().first() // TODO: Should be a service
-        return gameService.createGame(player, deck)
-    }
-*/
+                     val cardRepository: CardRepository,
+                     val currentUserHolder: CurrentUserHolder) {
+
     @PostMapping("/games")
-    fun createGame(@RequestParam fingerprint: String): Game {
-        val player = playerService.findOrCreateByToken(fingerprint)
+    fun createGame(): Game {
+        val player = currentUserHolder.user
         val deck = deckRepository.findAll().first() // TODO: Should be a service
         return gameService.createGame(player, deck)
     }
@@ -47,7 +42,7 @@ class GameController(val gameService: GameService,
     fun addPlayer(@PathVariable key: String, @PathVariable name: String): ResponseEntity<Game> {
         val optional = gameService.findByKey(key)
         return if (optional.isPresent) {
-            val player = playerService.findOrCreate(name)
+            val player = currentUserHolder.user
             val game = optional.get()
 // TODO: Why do I have to do this "both" ways?
             player.game = game
@@ -64,10 +59,10 @@ class GameController(val gameService: GameService,
         }.orElse(ResponseEntity.notFound().build())
 
     @PostMapping("/hands")
-    fun playHand(@RequestParam cardId: Long, @RequestParam storyId: Long, @RequestParam playerId: Long): Hand {
+    fun playHand(@RequestParam cardId: Long, @RequestParam storyId: Long): Hand {
         val card = cardRepository.getOne(cardId)
         val story = storyService.findById(storyId)
-        val player = playerService.findById(playerId)
+        val player = currentUserHolder.user
         val hand = Hand(card, story, player)
         return handRepository.save(hand)
     }
