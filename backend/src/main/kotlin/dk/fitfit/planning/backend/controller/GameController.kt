@@ -18,10 +18,17 @@ class GameController(val gameService: GameService,
                      val storyService: StoryService,
                      val handRepository: HandRepository,
                      val cardRepository: CardRepository) {
-
+/*
     @PostMapping("/games/{ownerName}")
     fun createGame(@PathVariable ownerName: String): Game {
         val player = playerService.findOrCreate(ownerName)
+        val deck = deckRepository.findAll().first() // TODO: Should be a service
+        return gameService.createGame(player, deck)
+    }
+*/
+    @PostMapping("/games")
+    fun createGame(@RequestParam fingerprint: String): Game {
+        val player = playerService.findOrCreateByToken(fingerprint)
         val deck = deckRepository.findAll().first() // TODO: Should be a service
         return gameService.createGame(player, deck)
     }
@@ -38,9 +45,9 @@ class GameController(val gameService: GameService,
 
     @PostMapping("/games/{key}/players/{name}")
     fun addPlayer(@PathVariable key: String, @PathVariable name: String): ResponseEntity<Game> {
-        val player = playerService.findOrCreate(name)
         val optional = gameService.findByKey(key)
         return if (optional.isPresent) {
+            val player = playerService.findOrCreate(name)
             val game = optional.get()
 // TODO: Why do I have to do this "both" ways?
             player.game = game
@@ -52,11 +59,9 @@ class GameController(val gameService: GameService,
     }
 
     @GetMapping("/games/{key}")
-    fun findGameByKey(@PathVariable key: String): ResponseEntity<Game> {
-        return gameService.findByKey(key).map {
+    fun findGameByKey(@PathVariable key: String): ResponseEntity<Game> = gameService.findByKey(key).map {
             ResponseEntity.ok().body(it)
         }.orElse(ResponseEntity.notFound().build())
-    }
 
     @PostMapping("/hands")
     fun playHand(@RequestParam cardId: Long, @RequestParam storyId: Long, @RequestParam playerId: Long): Hand {

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
-// TODO: Name shouldn't be unique, store a client fingerprint
-@Table(indexes = [Index(columnList = "name")])
+@Table(indexes = [Index(columnList = "token")])
 class Player(
         val name: String,
+        var token: String? = null,
         @ManyToOne
         @JsonIgnore
         // TODO: Could this be val?
