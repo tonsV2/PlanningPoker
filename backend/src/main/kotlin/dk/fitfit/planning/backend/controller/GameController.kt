@@ -7,14 +7,12 @@ import dk.fitfit.planning.backend.repository.DeckRepository
 import dk.fitfit.planning.backend.repository.HandRepository
 import dk.fitfit.planning.backend.security.CurrentUserHolder
 import dk.fitfit.planning.backend.service.GameService
-import dk.fitfit.planning.backend.service.PlayerService
 import dk.fitfit.planning.backend.service.StoryService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class GameController(val gameService: GameService,
-                     val playerService: PlayerService,
                      val deckRepository: DeckRepository,
                      val storyService: StoryService,
                      val handRepository: HandRepository,
@@ -58,6 +56,7 @@ class GameController(val gameService: GameService,
             ResponseEntity.ok().body(it)
         }.orElse(ResponseEntity.notFound().build())
 
+    // TODO: Use game key here? Player shouldn't be able to play on stores which he doesn't have to gameKey to
     @PostMapping("/hands")
     fun playHand(@RequestParam cardId: Long, @RequestParam storyId: Long): Hand {
         val card = cardRepository.getOne(cardId)
