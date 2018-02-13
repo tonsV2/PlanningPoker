@@ -24,5 +24,10 @@ pipeline {
         echo 'Test image'
       }
     }
+    stage('Push image') {
+      steps {
+        sh 'Push image'
+      }
+    }
   }
 }
