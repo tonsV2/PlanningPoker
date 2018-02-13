@@ -9,7 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         dir(path: 'backend') {
-          sh './gradlew test'
+          sh './gradlew bootJar'
         }
         
       }
