@@ -16,8 +16,10 @@ pipeline {
     }
     stage('Build docker image') {
       steps {
-        echo 'Docker image'
-        sh 'docker build -t tons/planning .'
+        dir(path: 'backend') {
+          sh 'docker build -t tons/planning .'
+        }
+        
       }
     }
     stage('Test docker image') {
