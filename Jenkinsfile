@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'openjdk:8-jdk-alpine'
-    }
-    
-  }
+  agent any
   stages {
     stage('Test') {
       steps {
@@ -22,6 +17,7 @@ pipeline {
     stage('Build docker image') {
       steps {
         echo 'Docker image'
+        sh 'docker build -t tons/planning .'
       }
     }
     stage('Test docker image') {
