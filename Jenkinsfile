@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'openjdk:8-jdk-alpine'
+    }
+    
+  }
   stages {
     stage('Test') {
       steps {
@@ -26,7 +31,7 @@ pipeline {
     }
     stage('Push image') {
       steps {
-        sh 'Push image'
+        sh 'echo Push image'
       }
     }
   }
