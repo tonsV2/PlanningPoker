@@ -4,7 +4,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Test'
-        sh './gradlew test'
+        sh 'cd backend && ./gradlew test'
       }
     }
   }
