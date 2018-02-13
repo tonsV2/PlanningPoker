@@ -19,5 +19,10 @@ pipeline {
         echo 'Docker image'
       }
     }
+    stage('Test docker image') {
+      steps {
+        echo 'Test image'
+      }
+    }
   }
 }
