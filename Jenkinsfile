@@ -3,11 +3,7 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        echo 'Test'
-        dir(path: 'cd backend') {
-          sh './gradlew test'
-        }
-        
+        sh 'cd backend && ./gradlew test'
       }
     }
     stage('Build') {
