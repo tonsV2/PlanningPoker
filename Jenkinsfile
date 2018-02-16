@@ -17,7 +17,10 @@ pipeline {
     stage('Build docker image') {
       steps {
         dir(path: 'backend') {
-          sh 'docker build -t tons/planning .'
+          sh '''echo $(pwd)
+ls
+docker build -t tons/planning .
+'''
         }
         
       }
