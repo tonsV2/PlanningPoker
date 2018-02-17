@@ -8,7 +8,7 @@ RUN git clone https://github.com/tonsV2/PlanningPoker.git
 #FROM gradle:alpine as build
 FROM openjdk:8-jdk-alpine as build
 #ADD . /app
-COPY --from=clone /app/PlanningPoker /app
+COPY --from=clone /app/PlanningPoker/backend /app
 WORKDIR /app
 RUN ./gradlew clean bootJar
 
